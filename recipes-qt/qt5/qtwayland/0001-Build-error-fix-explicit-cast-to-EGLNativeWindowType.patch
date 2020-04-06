@@ -1,0 +1,25 @@
+From 82d70ab4ee6e10723436d0e0b6790d21e99d5170 Mon Sep 17 00:00:00 2001
+From: Damiano Cipriani <damiano.cipriani@engicam.com>
+Date: Mon, 6 Apr 2020 10:35:43 +0200
+Subject: [PATCH] Build error fix: explicit cast to EGLNativeWindowType
+
+---
+ .../client/wayland-egl/qwaylandglcontext.cpp                    | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/hardwareintegration/client/wayland-egl/qwaylandglcontext.cpp b/src/hardwareintegration/client/wayland-egl/qwaylandglcontext.cpp
+index 6e48659d..5b3d4183 100644
+--- a/src/hardwareintegration/client/wayland-egl/qwaylandglcontext.cpp
++++ b/src/hardwareintegration/client/wayland-egl/qwaylandglcontext.cpp
+@@ -334,7 +334,7 @@ void QWaylandGLContext::updateGLFormat()
+ 
+     wl_surface *wlSurface = m_display->createSurface(nullptr);
+     wl_egl_window *eglWindow = wl_egl_window_create(wlSurface, 1, 1);
+-    EGLSurface eglSurface = eglCreateWindowSurface(m_eglDisplay, m_config, eglWindow, 0);
++    EGLSurface eglSurface = eglCreateWindowSurface(m_eglDisplay, m_config, (EGLNativeWindowType)eglWindow, 0);
+ 
+     if (eglMakeCurrent(m_eglDisplay, eglSurface, eglSurface, m_context)) {
+         if (m_format.renderableType() == QSurfaceFormat::OpenGL
+-- 
+2.17.1
+
