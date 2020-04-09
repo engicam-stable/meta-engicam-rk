@@ -7,7 +7,7 @@ LICENSE = "MIT"
 
 
 # Generate idbloader.img
-do_compile () {
+do_install () {
   echo "start tag=0x12345678
 ddr2_freq=0
 lp2_freq=0
