@@ -9,10 +9,7 @@ RDEPENDS_${PN} = " qt3d-examples"
 
 SRC_URI = "file://planets-qml"
 
-PACKAGE_ARCH = "${MACHINE_ARCH}"
-CONFFILES_${PN} = "${sysconfdir}/init.d/planets-qml"
 FILES_${PN} = "${sysconfdir}/*"
-PACKAGES = "${PN}"
 
 do_install() {
     install -d ${D}${sysconfdir}/init.d
@@ -24,9 +21,9 @@ do_install() {
 
     install -m 0755 ${WORKDIR}/planets-qml ${D}${sysconfdir}/init.d/
 
-    ln -sf ../init.d/planets-qml ${D}${sysconfdir}/rc1.d/K90planets-qml
-    ln -sf ../init.d/planets-qml ${D}${sysconfdir}/rc2.d/K90planets-qml
-    ln -sf ../init.d/planets-qml ${D}${sysconfdir}/rc3.d/K90planets-qml
-    ln -sf ../init.d/planets-qml ${D}${sysconfdir}/rc4.d/K90planets-qml
-    ln -sf ../init.d/planets-qml ${D}${sysconfdir}/rc5.d/S90planets-qml
+    ln -sf ../init.d/planets-qml ${D}${sysconfdir}/rc1.d/K99planets-qml
+    ln -sf ../init.d/planets-qml ${D}${sysconfdir}/rc2.d/K99planets-qml
+    ln -sf ../init.d/planets-qml ${D}${sysconfdir}/rc3.d/K99planets-qml
+    ln -sf ../init.d/planets-qml ${D}${sysconfdir}/rc4.d/K99planets-qml
+    ln -sf ../init.d/planets-qml ${D}${sysconfdir}/rc5.d/S99planets-qml
 }
