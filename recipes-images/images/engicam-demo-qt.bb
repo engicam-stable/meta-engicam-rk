@@ -15,4 +15,5 @@ IMAGE_INSTALL_append = "  \
                           qtwayland \
                           qt3d-examples \
                           planets-qml \
+                          gptfdisk \
                        "
