@@ -1,7 +1,7 @@
 inherit native
 
 SUMMARY = "IDBLoader creation"
-DEPENDS += "rk-binary-native u-boot-mkimage-native coreutils-native"
+DEPENDS += "rk-binary-native u-boot-mkimage-native coreutils-native u-boot"
 
 LICENSE = "MIT"
 
