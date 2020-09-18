@@ -2,13 +2,13 @@
 
 case "$1" in
   start)
-        pid1=`/bin/pidof -x gstreamer-wd`
+        pid1=`/bin/pidof -x gstreamer-wd.sh`
         if [ "$pid1" != "" ]
         then
           echo "gstreamer already running"
         else
           echo "starting gstreamer"
-          /home/root/gstreamer-wd &
+          /home/root/gstreamer-wd.sh &
         fi
 
         pid2=`/bin/pidof hellowindow`
@@ -21,37 +21,24 @@ case "$1" in
           /usr/share/examples/opengl/hellowindow/hellowindow -platform wayland &
         fi
 
-        pid3=`/bin/pidof stress`
+        pid3=`/bin/pidof -x dev-test-launcher.bash`
         if [ "$pid3" != "" ]
         then
-          echo "stress already running"
+          echo "dev-test already running"
         else
-          echo "starting stress"
-          temp=`cat /home/root/temperature`
-          indexe=0
-          indexo=0
-
-          iserr=`ls /home/root/error_${temp}_*`
-          if [ "$iserr" != "" ] ; then
-            indexe=`ls /home/root/error_${temp}_* | sort -r | head -n 1 | tr -s "_" "\n" | tail -n 1`
-          fi
-          indexe=$((indexe+1))
-
-          isout=`ls /home/root/output_${temp}_*`
-          if [ "$isout" != "" ] ; then
-            indexo=`ls /home/root/output_${temp}_* | sort -r | head -n 1 | tr -s "_" "\n" | tail -n 1`
-          fi
-          indexo=$((indexo+1))
-          stress --cpu 8 --vm 8 --vm-bytes 200M --hdd 8 --hdd-bytes 3145728 --io 8 --timeout 900 1>/home/root/output_${temp}_${indexo} 2>/home/root/error_${temp}_${indexe} &
+          echo "starting dev-test"
+          /home/root/dev-test-launcher.bash &
         fi
   ;;
 
   stop)
-        pid1=`/bin/pidof stress`
+        pid1=`/bin/pidof -x dev-test-launcher.bash`
         if [ "$pid1" = "" ] ; then
-          echo "stress not running"
+          echo "dev-test not running"
         else
-          echo "stopping stress"
+          echo "stopping dev-test"
+          killall dev-test-launcher.bash
+          killall ping
           killall stress
         fi
 
@@ -63,12 +50,12 @@ case "$1" in
           killall hellowindow
         fi
 
-        pid3=`/bin/pidof -x gstreamer-wd`
+        pid3=`/bin/pidof -x gstreamer-wd.sh`
         if [ "$pid3" = "" ] ; then
           echo "gstreamer not running"
         else
           echo "stopping gstreamer"
-          killall gstreamer-wd
+          killall gstreamer-wd.sh
           killall gst-launch-1.0
         fi
   ;;
