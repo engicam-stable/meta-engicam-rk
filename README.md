@@ -2,7 +2,12 @@
 
 Follow instructions described at [Engicam Rockchip manifests](https://github.com/engicam-stable/rockchip_manifests_engicam) to download Engicam Linux SDK for Rockchip machines
 
-Once installed, enter Yocto folder and launch the script for setting enviroment variables
+Once installed, enter Yocto folder and launch the script for setting machine
+```sh
+./rk-setup-release.sh
+```
+
+Then launch the script for setting enviroment variables
 ```sh
 source oe-init-build-env
 ```
