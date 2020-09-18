@@ -1,0 +1,81 @@
+#!/bin/sh
+
+case "$1" in
+  start)
+        pid1=`/bin/pidof -x gstreamer-wd`
+        if [ "$pid1" != "" ]
+        then
+          echo "gstreamer already running"
+        else
+          echo "starting gstreamer"
+          /home/root/gstreamer-wd &
+        fi
+
+        pid2=`/bin/pidof hellowindow`
+        if [ "$pid2" != "" ]
+        then
+          echo "hellowindow already running"
+        else
+          echo "starting hellowindow"
+          export XDG_RUNTIME_DIR=/run/user/0/
+          /usr/share/examples/opengl/hellowindow/hellowindow -platform wayland &
+        fi
+
+        pid3=`/bin/pidof stress`
+        if [ "$pid3" != "" ]
+        then
+          echo "stress already running"
+        else
+          echo "starting stress"
+          temp=`cat /home/root/temperature`
+          indexe=0
+          indexo=0
+
+          iserr=`ls /home/root/error_${temp}_*`
+          if [ "$iserr" != "" ] ; then
+            indexe=`ls /home/root/error_${temp}_* | sort -r | head -n 1 | tr -s "_" "\n" | tail -n 1`
+          fi
+          indexe=$((indexe+1))
+
+          isout=`ls /home/root/output_${temp}_*`
+          if [ "$isout" != "" ] ; then
+            indexo=`ls /home/root/output_${temp}_* | sort -r | head -n 1 | tr -s "_" "\n" | tail -n 1`
+          fi
+          indexo=$((indexo+1))
+          stress --cpu 8 --vm 8 --vm-bytes 200M --hdd 8 --hdd-bytes 3145728 --io 8 --timeout 900 1>/home/root/output_${temp}_${indexo} 2>/home/root/error_${temp}_${indexe} &
+        fi
+  ;;
+
+  stop)
+        pid1=`/bin/pidof stress`
+        if [ "$pid1" = "" ] ; then
+          echo "stress not running"
+        else
+          echo "stopping stress"
+          killall stress
+        fi
+
+        pid2=`/bin/pidof hellowindow`
+        if [ "$pid2" = "" ] ; then
+          echo "hellowindow not running"
+        else
+          echo "stopping hellowindow"
+          killall hellowindow
+        fi
+
+        pid3=`/bin/pidof -x gstreamer-wd`
+        if [ "$pid3" = "" ] ; then
+          echo "gstreamer not running"
+        else
+          echo "stopping gstreamer"
+          killall gstreamer-wd
+          killall gst-launch-1.0
+        fi
+  ;;
+
+  *)
+        echo "usage: $0 { start | stop }"
+  ;;
+esac
+
+exit 0
