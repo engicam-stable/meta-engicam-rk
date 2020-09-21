@@ -15,11 +15,13 @@ FILES_${PN} = "${sysconfdir}/* ${ROOT_HOME}/*"
 
 do_install() {
     install -d ${D}${sysconfdir}/init.d
+    install -d ${D}${sysconfdir}/rc0.d
     install -d ${D}${sysconfdir}/rc1.d
     install -d ${D}${sysconfdir}/rc2.d
     install -d ${D}${sysconfdir}/rc3.d
     install -d ${D}${sysconfdir}/rc4.d
     install -d ${D}${sysconfdir}/rc5.d
+    install -d ${D}${sysconfdir}/rc6.d
     install -d ${D}${ROOT_HOME}
 
     install -m 0755 ${WORKDIR}/camera-test            ${D}${sysconfdir}/init.d/
@@ -29,9 +31,11 @@ do_install() {
     install -m 0755 ${WORKDIR}/dev-test-launcher.bash ${D}${ROOT_HOME}
     install -m 0755 ${WORKDIR}/utils.bash             ${D}${ROOT_HOME}
 
-    ln -sf ../init.d/camera-test ${D}${sysconfdir}/rc1.d/K99camera-test
-    ln -sf ../init.d/camera-test ${D}${sysconfdir}/rc2.d/K99camera-test
-    ln -sf ../init.d/camera-test ${D}${sysconfdir}/rc3.d/K99camera-test
-    ln -sf ../init.d/camera-test ${D}${sysconfdir}/rc4.d/K99camera-test
+    ln -sf ../init.d/camera-test ${D}${sysconfdir}/rc0.d/K70camera-test
+    ln -sf ../init.d/camera-test ${D}${sysconfdir}/rc1.d/K70camera-test
+    ln -sf ../init.d/camera-test ${D}${sysconfdir}/rc2.d/K70camera-test
+    ln -sf ../init.d/camera-test ${D}${sysconfdir}/rc3.d/K70camera-test
+    ln -sf ../init.d/camera-test ${D}${sysconfdir}/rc4.d/K70camera-test
     ln -sf ../init.d/camera-test ${D}${sysconfdir}/rc5.d/S99camera-test
+    ln -sf ../init.d/camera-test ${D}${sysconfdir}/rc6.d/K70camera-test
 }
