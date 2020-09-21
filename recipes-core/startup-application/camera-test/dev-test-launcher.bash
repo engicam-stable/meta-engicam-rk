@@ -27,6 +27,13 @@ esi=$? # error stress index
 
 stress --cpu 10 --vm 64 --vm-bytes 25M --hdd 8 --hdd-bytes 3145728 --io 8 --timeout $time 1>${out_stress}_${temp}_${osi} 2>${err_stress}_${temp}_${esi} &
 
+## CPU and memory usage
+out_top="${path}/top"
+get_index $out_top
+oti=$? # output top index
+
+top -b | awk 'xor(/CPU:/,/Mem:/)' 1>${out_top}_${temp}_${oti} &
+
 ## USB
 out_usb="${path}/usb_out"
 err_usb="${path}/usb_err"

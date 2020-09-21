@@ -40,6 +40,7 @@ case "$1" in
           killall dev-test-launcher.bash
           killall ping
           killall stress
+          killall top
         fi
 
         pid2=`/bin/pidof hellowindow`
