@@ -7,7 +7,10 @@ function get_index()
 
   exist=`ls $1_${temp}_*`
   if [ "$exist" != "" ] ; then
-    index=`ls $1_${temp}_* | sort -r | head -n 1 | tr -s "_" "\n" | tail -n 1`
+    root=$1_${temp}_
+    len=${#root}
+    len=$((len+1))
+    index=`ls $1_${temp}_* | sort | cut -c${len}- | sort -nr | head -n 1 | tr -s "_" "\n" | tail -n 1`
   fi
   index=$((index+1))
   return $index
