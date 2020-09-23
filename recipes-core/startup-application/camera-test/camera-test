@@ -2,8 +2,17 @@
 
 case "$1" in
   start)
-        pid1=`/bin/pidof -x gstreamer-wd.sh`
+        pid1=`/bin/pidof -x system-monitor.bash`
         if [ "$pid1" != "" ]
+        then
+          echo "system-monitor already running"
+        else
+          echo "starting system-monitor"
+          /home/root/system-monitor.bash &
+        fi
+
+        pid2=`/bin/pidof -x gstreamer-wd.sh`
+        if [ "$pid2" != "" ]
         then
           echo "gstreamer already running"
         else
@@ -11,8 +20,8 @@ case "$1" in
           /home/root/gstreamer-wd.sh &
         fi
 
-        pid2=`/bin/pidof hellowindow`
-        if [ "$pid2" != "" ]
+        pid3=`/bin/pidof hellowindow`
+        if [ "$pid3" != "" ]
         then
           echo "hellowindow already running"
         else
@@ -21,8 +30,8 @@ case "$1" in
           /usr/share/examples/opengl/hellowindow/hellowindow -platform wayland &
         fi
 
-        pid3=`/bin/pidof -x dev-test-launcher.bash`
-        if [ "$pid3" != "" ]
+        pid4=`/bin/pidof -x dev-test-launcher.bash`
+        if [ "$pid4" != "" ]
         then
           echo "dev-test already running"
         else
@@ -59,6 +68,16 @@ case "$1" in
           killall gstreamer-wd.sh
           killall gst-launch-1.0
         fi
+
+        pid4=`/bin/pidof -x system-monitor.bash`
+        if [ "$pid4" = "" ]
+        then
+          echo "system-monitor not running"
+        else
+          echo "stopping system-monitor"
+          killall system-monitor.bash
+        fi
+
   ;;
 
   *)

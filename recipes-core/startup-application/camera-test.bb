@@ -9,7 +9,7 @@ RDEPENDS_${PN} = " gstreamer1.0 gstreamer1.0-plugins-bad gstreamer1.0-plugins-ba
                    gstreamer1.0-plugins-good qtbase-examples stress bash "
 
 SRC_URI = "file://camera-test file://gstreamer-wd.sh file://F40.mp4 file://temperature file://dev-test-launcher.bash \
-           file://utils.bash"
+           file://utils.bash file://system-monitor.bash"
 
 FILES_${PN} = "${sysconfdir}/* ${ROOT_HOME}/*"
 
@@ -30,6 +30,7 @@ do_install() {
     install -m 0755 ${WORKDIR}/temperature            ${D}${ROOT_HOME}
     install -m 0755 ${WORKDIR}/dev-test-launcher.bash ${D}${ROOT_HOME}
     install -m 0755 ${WORKDIR}/utils.bash             ${D}${ROOT_HOME}
+    install -m 0755 ${WORKDIR}/system-monitor.bash    ${D}${ROOT_HOME}
 
     ln -sf ../init.d/camera-test ${D}${sysconfdir}/rc0.d/K70camera-test
     ln -sf ../init.d/camera-test ${D}${sysconfdir}/rc1.d/K70camera-test
