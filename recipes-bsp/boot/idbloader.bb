@@ -18,7 +18,7 @@ lp4_freq=0
 
 uart id=2
 uart iomux=1
-uart baudrate=1500000
+uart baudrate=115200
 
 end" > ${datadir}/rk-binary-native/ddrbin_param.txt
 
