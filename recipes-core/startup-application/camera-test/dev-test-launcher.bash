@@ -42,7 +42,7 @@ get_index $err_card
 eci=$? # error card index
 
 dev_usb=/dev/sda1
-dev_card=/dev/mmcblk0p5
+dev_card=/dev/mmcblk0p1
 path_usb=/mnt/usb
 path_card=/mnt/card
 
