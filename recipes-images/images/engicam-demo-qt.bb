@@ -17,4 +17,6 @@ IMAGE_INSTALL_append = "  \
                           planets-qml \
                           gptfdisk \
                           lwb-bcm4343w-fw \
+                          brcm-patchram-plus \
+                          bluetooth-radio-patch \
                        "
