@@ -9,6 +9,6 @@ IMAGE_INSTALL_append = "  \
                           gptfdisk \
                           stress \
                           camera-test \
+                          image-flash \
+                          i2c-tools \
                        "
-
-#IMAGE_ROOTFS_EXTRA_SPACE = "1048576"
