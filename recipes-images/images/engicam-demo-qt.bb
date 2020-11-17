@@ -16,4 +16,5 @@ IMAGE_INSTALL_append = "  \
                           qt3d-examples \
                           planets-qml \
                           gptfdisk \
+                          image-flash \
                        "
