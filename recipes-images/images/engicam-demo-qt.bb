@@ -19,4 +19,5 @@ IMAGE_INSTALL_append = "  \
                           lwb-bcm4343w-fw \
                           brcm-patchram-plus \
                           bluetooth-radio-patch \
+                          image-flash \
                        "
