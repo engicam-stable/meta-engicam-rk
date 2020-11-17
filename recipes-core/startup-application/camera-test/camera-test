@@ -1,0 +1,88 @@
+#!/bin/sh
+
+case "$1" in
+  start)
+        pid1=`/bin/pidof -x system-monitor.bash`
+        if [ "$pid1" != "" ]
+        then
+          echo "system-monitor already running"
+        else
+          echo "starting system-monitor"
+          /home/root/system-monitor.bash &
+        fi
+
+        pid2=`/bin/pidof -x gstreamer-wd.sh`
+        if [ "$pid2" != "" ]
+        then
+          echo "gstreamer already running"
+        else
+          echo "starting gstreamer"
+          /home/root/gstreamer-wd.sh &
+        fi
+
+        pid3=`/bin/pidof hellowindow`
+        if [ "$pid3" != "" ]
+        then
+          echo "hellowindow already running"
+        else
+          echo "starting hellowindow"
+          export XDG_RUNTIME_DIR=/run/user/0/
+          /usr/share/examples/opengl/hellowindow/hellowindow -platform wayland &
+        fi
+
+        pid4=`/bin/pidof -x dev-test-launcher.bash`
+        if [ "$pid4" != "" ]
+        then
+          echo "dev-test already running"
+        else
+          echo "starting dev-test"
+          /home/root/dev-test-launcher.bash &
+        fi
+  ;;
+
+  stop)
+        pid1=`/bin/pidof -x dev-test-launcher.bash`
+        if [ "$pid1" = "" ] ; then
+          echo "dev-test not running"
+        else
+          echo "stopping dev-test"
+          killall dev-test-launcher.bash
+          killall ping
+          killall stress
+          killall top
+        fi
+
+        pid2=`/bin/pidof hellowindow`
+        if [ "$pid2" = "" ] ; then
+          echo "hellowindow not running"
+        else
+          echo "stopping hellowindow"
+          killall hellowindow
+        fi
+
+        pid3=`/bin/pidof -x gstreamer-wd.sh`
+        if [ "$pid3" = "" ] ; then
+          echo "gstreamer not running"
+        else
+          echo "stopping gstreamer"
+          killall gstreamer-wd.sh
+          killall gst-launch-1.0
+        fi
+
+        pid4=`/bin/pidof -x system-monitor.bash`
+        if [ "$pid4" = "" ]
+        then
+          echo "system-monitor not running"
+        else
+          echo "stopping system-monitor"
+          killall system-monitor.bash
+        fi
+
+  ;;
+
+  *)
+        echo "usage: $0 { start | stop }"
+  ;;
+esac
+
+exit 0
