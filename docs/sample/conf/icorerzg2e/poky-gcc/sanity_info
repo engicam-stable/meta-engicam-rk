@@ -1,0 +1,4 @@
+SANITY_VERSION 1
+TMPDIR /home/engicam/secondroot/yocto/renesas.1.4/yocto/build/tmp
+SSTATE_DIR /home/engicam/secondroot/yocto/renesas.1.4/yocto/build/sstate-cache
+NATIVELSBSTRING linuxmint-19.2

@@ -1,0 +1,39 @@
+From f668bd5926797f5b0f0e47da63ba2a5165c58efa Mon Sep 17 00:00:00 2001
+From: Matteo Lisi <matteo.lisi@engicam.com>
+Date: Wed, 9 Sep 2020 16:09:58 +0000
+Subject: [PATCH] init.patch
+
+---
+ plat/renesas/rcar/platform.mk | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/plat/renesas/rcar/platform.mk b/plat/renesas/rcar/platform.mk
+index 86bb5ad2..40321d82 100644
+--- a/plat/renesas/rcar/platform.mk
++++ b/plat/renesas/rcar/platform.mk
+@@ -383,19 +383,19 @@ endif
+ 
+ # Process RCAR_DRAM_LPDDR4_MEMCONF flag
+ ifndef RCAR_DRAM_LPDDR4_MEMCONF
+-RCAR_DRAM_LPDDR4_MEMCONF :=1
++RCAR_DRAM_LPDDR4_MEMCONF :=0
+ endif
+ $(eval $(call add_define,RCAR_DRAM_LPDDR4_MEMCONF))
+ 
+ # Process RCAR_DRAM_DDR3L_MEMCONF flag
+ ifndef RCAR_DRAM_DDR3L_MEMCONF
+-RCAR_DRAM_DDR3L_MEMCONF :=1
++RCAR_DRAM_DDR3L_MEMCONF :=0
+ endif
+ $(eval $(call add_define,RCAR_DRAM_DDR3L_MEMCONF))
+ 
+ # Process RCAR_DRAM_DDR3L_MEMDUAL flag
+ ifndef RCAR_DRAM_DDR3L_MEMDUAL
+-RCAR_DRAM_DDR3L_MEMDUAL :=1
++RCAR_DRAM_DDR3L_MEMDUAL :=0
+ endif
+ $(eval $(call add_define,RCAR_DRAM_DDR3L_MEMDUAL))
+ 
+-- 
+2.17.1
+

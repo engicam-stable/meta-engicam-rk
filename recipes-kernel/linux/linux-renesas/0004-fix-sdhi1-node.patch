@@ -1,0 +1,120 @@
+From f85bae50e133991413506582217108a51a0315ba Mon Sep 17 00:00:00 2001
+From: Matteo Lisi <matteo.lisi@engicam.com>
+Date: Thu, 15 Jul 2021 14:30:18 +0200
+Subject: [PATCH] fix sdhi1 node
+
+---
+ arch/arm64/boot/dts/engicam/icore-rzg2e.dts | 65 +++++++++++++--------
+ 1 file changed, 40 insertions(+), 25 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/engicam/icore-rzg2e.dts b/arch/arm64/boot/dts/engicam/icore-rzg2e.dts
+index 5755d293c9df..deaa94986900 100644
+--- a/arch/arm64/boot/dts/engicam/icore-rzg2e.dts
++++ b/arch/arm64/boot/dts/engicam/icore-rzg2e.dts
+@@ -112,6 +112,17 @@ sound: sound {
+ 			  1800000 0>;
+ 	};
+ 
++	
++	vcc_sdhi1: regulator-vcc-sdhi1 {
++		compatible = "regulator-fixed";
++		regulator-name = "SDHI1 Vcc";
++		regulator-min-microvolt = <3300000>;
++		regulator-max-microvolt = <3300000>;
++		regulator-always-on;
++		regulator-boot-on;
++	};
++
++	
+ 	vdd_bl_reg: bl-regulator {
+ 		compatible = "regulator-fixed";
+ 		regulator-name = "fixed-12V";
+@@ -149,26 +160,6 @@ sound: sound {
+ 		regulator-boot-on;
+ 	};
+ 
+-	wlreg_on: fixedregulator@100 {
+-			compatible = "regulator-fixed";
+-			regulator-name = "wlreg_on";
+-			regulascptor-min-microvolt = <3300000>;
+-			regulator-max-microvolt = <3300000>;
+-			gpio = <&gpio5 16 1>;
+-			enable-active-high;
+-			regulator-always-on;
+-    };	
+-	
+-	btreg_on: fixedregulator@200 {
+-        compatible = "regulator-fixed";
+-        regulator-name = "btreg_on";
+-        regulator-min-microvolt = <3300000>;
+-        regulator-max-microvolt = <3300000>;
+-        gpio = <&gpio0 5 1>;
+-        enable-active-high;
+-        regulator-always-on; 
+-    };
+-	
+ 	backlight {
+ 		compatible = "pwm-backlight";
+ 		pwms = <&pwm5 0 5000000>;
+@@ -447,6 +438,22 @@ sound: sound {
+ 	};
+ };
+ 
++&gpio5 {
++	bt_regon {
++			gpio-hog;
++			gpios = <1 GPIO_ACTIVE_HIGH>;
++			output-high;
++			line-name = "bt_regon";
++	};
++
++	wl_regon {
++			gpio-hog;
++			gpios = <16 GPIO_ACTIVE_HIGH>;
++			output-high;
++			line-name = "wl_regon";
++	};
++};
++
+ &gpio1 {
+ 	pci-reset {
+ 		gpio-hog;
+@@ -463,7 +470,6 @@ sound: sound {
+ 	};
+ };
+ 
+-
+ &ehci0 {
+ 	dr_mode = "host";
+ 	status = "okay";
+@@ -675,14 +681,23 @@ sound: sound {
+ };
+ 
+ &sdhi1 { /* wifi */
++
++	#address-cells = <1>;
++	#size-cells = <0>;
++
+ 	pinctrl-0 = <&sdhi1_pins>;
+-	pinctrl-1 = <&sdhi1_pins_uhs>;
+-	pinctrl-names = "default", "state_uhs";	
+-	vmmc-supply = <&vcc_sdhi0>;
+-	vqmmc-supply = <&vccq_sdhi0>;	
++	pinctrl-names = "default";
++	vmmc-supply = <&vcc_sdhi1>;
+ 	bus-width = <4>;
+ 	non-removable;
+ 	status = "okay";
++	no-1-8-v;
++	
++	brcmf: wifi@1 {
++			reg = <1>;
++			compatible = "brcm,bcm4329-fmac";
++	};
++
+ };
+  
+ &sdhi0 { /* sdcard */
+-- 
+2.17.1
+

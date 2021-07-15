@@ -1,0 +1,35 @@
+From 94df13dde41919aaeb6e7a7af36bccf77ac6e985 Mon Sep 17 00:00:00 2001
+From: Matteo Lisi <matteo.lisi@engicam.com>
+Date: Thu, 15 Jul 2021 16:55:13 +0200
+Subject: [PATCH] fix bt_regon pin
+
+---
+ arch/arm64/boot/dts/engicam/icore-rzg2e.dts | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/engicam/icore-rzg2e.dts b/arch/arm64/boot/dts/engicam/icore-rzg2e.dts
+index deaa94986900..fbe830d5b480 100644
+--- a/arch/arm64/boot/dts/engicam/icore-rzg2e.dts
++++ b/arch/arm64/boot/dts/engicam/icore-rzg2e.dts
+@@ -438,13 +438,16 @@ sound: sound {
+ 	};
+ };
+ 
+-&gpio5 {
++&gpio0 {
+ 	bt_regon {
+ 			gpio-hog;
+-			gpios = <1 GPIO_ACTIVE_HIGH>;
++			gpios = <5 GPIO_ACTIVE_HIGH>;
+ 			output-high;
+ 			line-name = "bt_regon";
+ 	};
++};
++	
++&gpio5 {
+ 
+ 	wl_regon {
+ 			gpio-hog;
+-- 
+2.17.1
+
